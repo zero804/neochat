@@ -32,6 +32,8 @@ ToolBar {
     property bool hasAttachment: false
     property url attachmentPath
 
+    height: 40 + (emojiPicker.visible ? emojiPicker.height : 0)
+
     position: ToolBar.Footer
 
     contentItem: ColumnLayout {
