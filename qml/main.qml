@@ -102,6 +102,12 @@ Kirigami.ApplicationWindow {
                 enabled: pageStack.layers.currentItem.title !== i18n("Settings")
             },
             Kirigami.Action {
+                text: i18n("Captcha")
+                iconName: "settings-configure"
+                onTriggered: pageStack.layers.push("qrc:/imports/NeoChat/Page/RegistrationPage.qml")
+                enabled: pageStack.layers.currentItem.title !== i18n("Captcha")
+            },
+            Kirigami.Action {
                 text: i18n("About Neochat")
                 iconName: "help-about"
                 onTriggered: pageStack.layers.push(aboutPage)
@@ -152,6 +158,8 @@ Kirigami.ApplicationWindow {
         }
 
         onErrorOccured: showPassiveNotification(error + ": " + detail)
+        
+        onRequestCaptcha: pageStack.layers.push("qrc:/imports/NeoChat/Page/CaptchaPage.qml")
     }
 
     RoomListModel {

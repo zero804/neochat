@@ -27,7 +27,7 @@ ecm_setup_version(0.1.0
     VERSION_HEADER ${CMAKE_CURRENT_BINARY_DIR}/neochat-version.h
 )
 
-find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Widgets Core Quick Gui QuickControls2 Multimedia Svg)
+find_package(Qt5 ${QT_MIN_VERSION} REQUIRED NO_MODULE COMPONENTS Widgets Core Quick Gui QuickControls2 Multimedia Svg WebView)
 find_package(KF5 ${REQUIRED_KF5_VERSION} REQUIRED COMPONENTS Kirigami2 I18n Notifications Config CoreAddons)
 
 if(ANDROID)

@@ -20,7 +20,7 @@ add_executable(neochat
 )
 
 target_include_directories(neochat PRIVATE ${CMAKE_BINARY_DIR})
-target_link_libraries(neochat PRIVATE Qt5::Quick Qt5::Qml Qt5::Gui Qt5::Network Qt5::QuickControls2 KF5::I18n KF5::Kirigami2 KF5::Notifications KF5::ConfigCore KF5::ConfigGui KF5::CoreAddons Quotient cmark::cmark)
+target_link_libraries(neochat PRIVATE Qt5::Quick Qt5::Qml Qt5::Gui Qt5::Network Qt5::QuickControls2 Qt5::WebView KF5::I18n KF5::Kirigami2 KF5::Notifications KF5::ConfigCore KF5::ConfigGui KF5::CoreAddons Quotient cmark::cmark)
 kconfig_add_kcfg_files(neochat GENERATE_MOC neochatconfig.kcfgc)
 
 if(ANDROID)
@@ -53,6 +53,7 @@ if(ANDROID)
         "configure"
         "rating"
         "rating-unrated"
+        "checkmark"
     )
 else()
     target_link_libraries(neochat PRIVATE Qt5::Widgets ${QTKEYCHAIN_LIBRARIES})

@@ -30,6 +30,10 @@ class Controller : public QObject
     Q_PROPERTY(Connection *activeConnection READ activeConnection WRITE setActiveConnection NOTIFY activeConnectionChanged)
     Q_PROPERTY(bool busy READ busy WRITE setBusy NOTIFY busyChanged)
     Q_PROPERTY(KAboutData aboutData READ aboutData WRITE setAboutData NOTIFY aboutDataChanged)
+    Q_PROPERTY(QString recaptchaSiteKey READ recaptchaSiteKey WRITE setRecaptchaSiteKey NOTIFY recaptchaSiteKeyChanged)
+    Q_PROPERTY(QString recaptchaResponse READ recaptchaResponse WRITE setRecaptchaResponse NOTIFY recaptchaResponseChanged)
+    Q_PROPERTY(QString termsName READ termsName WRITE setTermsName NOTIFY termsNameChanged)
+    Q_PROPERTY(QString termsUrl READ termsUrl WRITE setTermsUrl NOTIFY termsUrlChanged)
 
 public:
     static Controller &instance();
@@ -46,6 +50,9 @@ public:
     Q_INVOKABLE void loginWithAccessToken(QString, QString, QString, QString);
 
     Q_INVOKABLE void changePassword(Quotient::Connection *connection, const QString &currentPassword, const QString &newPassword);
+    
+    Q_INVOKABLE void registerAccount(const QString &homeserver, const QString &username, const QString &email, const QString &password);
+    Q_INVOKABLE QVector<QVector<QString>> flows(const QString &homeserver) const;
 
     int accountCount() const;
 
@@ -57,6 +64,18 @@ public:
 
     void setAboutData(KAboutData aboutData);
     KAboutData aboutData() const;
+    
+    void setRecaptchaSiteKey(const QString &recaptchaSiteKey);
+    QString recaptchaSiteKey() const;
+    
+    void setRecaptchaResponse(const QString &response);
+    QString recaptchaResponse() const;
+    
+    void setTermsName(const QString &termsname);
+    QString termsName() const;
+    
+    void setTermsUrl(const QString &termsUrl);
+    QString termsUrl() const;
 
     enum PasswordStatus {
         Success,
@@ -72,6 +91,10 @@ private:
     QVector<Connection *> m_connections;
     QPointer<Connection> m_connection;
     bool m_busy = false;
+    QString m_recaptchaSiteKey = "6LcgI54UAAAAABGdGmruw6DdOocFpYVdjYBRe4zb";
+    QString m_recaptchaResponse;
+    QString m_termsName;
+    QString m_termsUrl;
 
     QByteArray loadAccessTokenFromFile(const AccountSettings &account);
     QByteArray loadAccessTokenFromKeyChain(const AccountSettings &account);
@@ -99,6 +122,10 @@ Q_SIGNALS:
     void activeConnectionChanged();
     void aboutDataChanged();
     void passwordStatus(Controller::PasswordStatus status);
+    void recaptchaSiteKeyChanged();
+    void recaptchaResponseChanged();
+    void termsNameChanged();
+    void termsUrlChanged();
 
 public Q_SLOTS:
     void logout(Quotient::Connection *conn, bool serverSideLogout);
@@ -115,6 +142,31 @@ class NeochatChangePasswordJob : public BaseJob
 {
 public:
     explicit NeochatChangePasswordJob(const QString &newPassword, bool logoutDevices, const Omittable<QJsonObject> &auth = none);
+};
+
+class NeochatRegisterJob : public BaseJob {
+public:
+    explicit NeochatRegisterJob(const QString& kind = QStringLiteral("user"),
+                         const Omittable<QJsonObject>& auth = none,
+                         const QString& username = {},
+                         const QString& password = {},
+                         const QString& deviceId = {},
+                         const QString& initialDeviceDisplayName = {},
+                         Omittable<bool> inhibitLogin = none);
+
+    QString userId() const { return loadFromJson<QString>("user_id"_ls); }
+
+    QString accessToken() const
+    {
+        return loadFromJson<QString>("access_token"_ls);
+    }
+
+    QString homeServer() const
+    {
+        return loadFromJson<QString>("home_server"_ls);
+    }
+
+    QString deviceId() const { return loadFromJson<QString>("device_id"_ls); }
 };
 
 #endif // CONTROLLER_H

@@ -89,7 +89,7 @@ QVariant UserListModel::data(const QModelIndex &index, int role) const
         return QVariant::fromValue(user);
     }
     if (role == PermRole) {
-        auto pl = m_currentRoom->getCurrentState<RoomPowerLevelsEvent>();
+        const auto *pl = eventCast<const RoomPowerLevelsEvent>(m_currentRoom->getCurrentState("m.room.power_levels"));
         auto userPl = pl->powerLevelForUser(user->id());
 
         if (userPl == pl->content().usersDefault) { // Shortcut

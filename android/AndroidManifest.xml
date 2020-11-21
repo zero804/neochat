@@ -7,9 +7,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.kde.neochat"
           android:versionName="0.0.1"
-          android:versionCode="1604412458"
+          android:versionCode="1606159184"
           android:installLocation="auto">
-    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Neochat" android:icon="@drawable/neochat">
+    <application android:name="org.qtproject.qt5.android.bindings.QtApplication" android:label="Neochat" android:icon="@drawable/neochat" android:usesCleartextTraffic="true">
         <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation"
                   android:name="org.qtproject.qt5.android.bindings.QtActivity"
                   android:label="Neochat"

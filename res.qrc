@@ -13,6 +13,8 @@
         <file>imports/NeoChat/Page/InviteUserPage.qml</file>
         <file>imports/NeoChat/Page/SettingsPage.qml</file>
         <file>imports/NeoChat/Page/InvitationPage.qml</file>
+        <file>imports/NeoChat/Page/CaptchaPage.qml</file>
+        <file>imports/NeoChat/Page/RegistrationPage.qml</file>
         <file>imports/NeoChat/Component/qmldir</file>
         <file>imports/NeoChat/Component/ChatTextInput.qml</file>
         <file>imports/NeoChat/Component/AutoMouseArea.qml</file>
