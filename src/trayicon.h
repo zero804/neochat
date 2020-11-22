@@ -34,7 +34,11 @@ private:
     QIcon icon_;
 };
 
+#ifdef Q_OS_ANDROID
+class TrayIcon : public QObject
+#else
 class TrayIcon : public QSystemTrayIcon
+#endif
 {
     Q_OBJECT
     Q_PROPERTY(QString iconSource READ iconSource WRITE setIconSource NOTIFY iconSourceChanged)

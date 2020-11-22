@@ -92,7 +92,9 @@ QPixmap MsgCountComposedIcon::pixmap(const QSize &size, QIcon::Mode mode, QIcon:
 }
 
 TrayIcon::TrayIcon(QObject *parent)
+#ifdef Q_OS_ANDROID
     : QSystemTrayIcon(parent)
+#endif
 {
     QMenu *menu = new QMenu();
     viewAction_ = new QAction(i18n("Show"), parent);
@@ -118,7 +120,7 @@ void TrayIcon::setNotificationCount(int count)
         return;
 
     QtMac::setBadgeLabelText(labelText);
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) || defined(Q_OS_ANDROID)
 // FIXME: Find a way to use Windows apis for the badge counter (if any).
 #else
     if (!icon_ || count == icon_->msgCount)
@@ -154,7 +156,7 @@ void TrayIcon::setIsOnline(bool online)
 
         QtMac::setBadgeLabelText(labelText);
     }
-#elif defined(Q_OS_WIN)
+#elif defined(Q_OS_WIN) || defined(Q_OS_ANDROID)
 // FIXME: Find a way to use Windows apis for the badge counter (if any).
 #else
     if (!icon_ || online == icon_->isOnline)
@@ -176,7 +178,7 @@ void TrayIcon::setIconSource(const QString &source)
     m_iconSource = source;
 #if defined(Q_OS_MAC) || defined(Q_OS_WIN)
     setIcon(QIcon(source));
-#else
+#elif ! defined(Q_OS_ANDROID)
     icon_ = new MsgCountComposedIcon(source);
     setIcon(QIcon(icon_));
     icon_->isOnline = m_isOnline;
