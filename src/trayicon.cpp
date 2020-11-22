@@ -94,6 +94,8 @@ QPixmap MsgCountComposedIcon::pixmap(const QSize &size, QIcon::Mode mode, QIcon:
 TrayIcon::TrayIcon(QObject *parent)
 #ifdef Q_OS_ANDROID
     : QSystemTrayIcon(parent)
+#else
+    : QObject(parent)
 #endif
 {
     QMenu *menu = new QMenu();
