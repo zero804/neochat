@@ -13,7 +13,9 @@
 #include <QIconEngine>
 #include <QPainter>
 #include <QRect>
+#ifndef Q_OS_ANDROID
 #include <QSystemTrayIcon>
+#endif
 
 class MsgCountComposedIcon : public QIconEngine
 {
