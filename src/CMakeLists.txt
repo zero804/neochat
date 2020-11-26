@@ -20,7 +20,7 @@ add_executable(neochat
 )
 
 if(NOT ANDROID)
-    target_sources(neochat PRIVATE trayicon.cpp windowconfig.cpp)
+    target_sources(neochat PRIVATE trayicon.cpp)
 endif()
 
 target_include_directories(neochat PRIVATE ${CMAKE_BINARY_DIR})

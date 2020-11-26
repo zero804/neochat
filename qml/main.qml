@@ -21,12 +21,18 @@ Kirigami.ApplicationWindow {
     id: root
     property var currentRoom: null
 
-    onWidthChanged: if (WindowConfig) WindowConfig.saveWindowSize(Window.window);
-    onHeightChanged: if (WindowConfig) WindowConfig.saveWindowSize(Window.window);
+    x: Config.windowX
+    y: Config.windowY
+    width: Config.windowWidth
+    height: Config.windowHeight
 
-    // won't work on wayland, but on Wayland the compositor should take care of it
-    onXChanged: if (WindowConfig) WindowConfig.saveWindowPosition(Window.window);
-    onYChanged: if (WindowConfig) WindowConfig.saveWindowPosition(Window.window);
+    onClosing: {
+        Config.windowX = x;
+        Config.windowY = y;
+        Config.windowWidth = width;
+        Config.windowHeight = height;
+        Config.save()
+    }
 
     /**
      * Manage opening and close rooms

@@ -24,5 +24,15 @@
       <default>true</default>
     </entry>
   </group>
+  <group name="Window">
+    <entry key="windowX" type="int" />
+    <entry key="windowY" type="int" />
+    <entry key="windowWidth" type="int">
+      <default>300</default>
+    </entry>
+    <entry key="windowHeight" type="int">
+      <default>450</default>
+    </entry>
+  </group>
 </kcfg>
 
