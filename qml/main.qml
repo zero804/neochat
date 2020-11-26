@@ -6,6 +6,7 @@
  */
 import QtQuick 2.14
 import QtQuick.Controls 2.14 as QQC2
+import QtQuick.Window 2.2
 import QtQuick.Layouts 1.14
 
 import org.kde.kirigami 2.12 as Kirigami
@@ -19,6 +20,13 @@ import NeoChat.Page 1.0
 Kirigami.ApplicationWindow {
     id: root
     property var currentRoom: null
+
+    onWidthChanged: if (WindowConfig) WindowConfig.saveWindowSize(Window.window);
+    onHeightChanged: if (WindowConfig) WindowConfig.saveWindowSize(Window.window);
+
+    // won't work on wayland, but on Wayland the compositor should take care of it
+    onXChanged: if (WindowConfig) WindowConfig.saveWindowPosition(Window.window);
+    onYChanged: if (WindowConfig) WindowConfig.saveWindowPosition(Window.window);
 
     /**
      * Manage opening and close rooms

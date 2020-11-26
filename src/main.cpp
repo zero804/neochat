@@ -12,6 +12,7 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QQuickWindow>
+#include <QDebug>
 
 #include <KAboutData>
 #ifndef Q_OS_ANDROID
@@ -41,6 +42,10 @@
 #include "userlistmodel.h"
 #include "neochatconfig.h"
 #include "chatdocumenthandler.h"
+
+#ifndef Q_OS_ANDROID
+#include "windowconfig.h"
+#endif
 
 using namespace Quotient;
 
@@ -77,6 +82,10 @@ int main(int argc, char *argv[])
 
     Clipboard clipboard;
     auto config = NeoChatConfig::self();
+#ifndef Q_OS_ANDROID
+    WindowConfig windowConfig;
+    qmlRegisterSingletonInstance("org.kde.neochat", 1, 0, "WindowConfig", &windowConfig);
+#endif
 
     qmlRegisterSingletonInstance("org.kde.neochat", 1, 0, "Controller", &Controller::instance());
     qmlRegisterSingletonInstance("org.kde.neochat", 1, 0, "Clipboard", &clipboard);
@@ -137,6 +146,16 @@ int main(int argc, char *argv[])
             }
         }
     });
+    const auto rootObjects = engine.rootObjects();
+    for (auto obj : rootObjects) {
+        auto view = qobject_cast<QQuickWindow*>(obj);
+        if (view) {
+            windowConfig.restoreWindowSize(view);
+            windowConfig.restoreWindowPosition(view);
+            qDebug() << "restore";
+        }
+    }
 #endif
+
     return app.exec();
 }
