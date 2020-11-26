@@ -28,10 +28,10 @@
     <entry key="windowX" type="int" />
     <entry key="windowY" type="int" />
     <entry key="windowWidth" type="int">
-      <default>300</default>
+      <default>1200</default>
     </entry>
     <entry key="windowHeight" type="int">
-      <default>450</default>
+      <default>800</default>
     </entry>
   </group>
 </kcfg>
